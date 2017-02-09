@@ -1,3 +1,4 @@
+# https://hub.docker.com/r/jenkinsci/jnlp-slave/
 FROM jenkinsci/jnlp-slave:2.62-alpine
 MAINTAINER GitHub ravishivt
 
