@@ -1,6 +1,6 @@
 default: docker_build
 
-DOCKER_IMAGE ?= 10.163.148.196:30500/aruba-get/jnlp-slave
+DOCKER_IMAGE ?= 10.163.148.197:30500/aruba-get/jnlp-slave
 BUILD_NUMBER ?= `git rev-parse --short HEAD`
 VCS_REF ?= `git rev-parse --short HEAD`
 

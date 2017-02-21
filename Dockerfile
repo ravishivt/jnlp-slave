@@ -20,7 +20,8 @@ ENV KUBECTL_VERSION v1.5.2
 
 RUN \
   # Install curl-dev on alpine 3.4 due to http://stackoverflow.com/a/41651363/684893
-  apk add --no-cache docker curl curl-dev openssh \
+  apk add --no-cache docker curl curl-dev openssh gettext \
+  && apk --update add tar \
   # Install Helm
   && curl -fsSL -o helm.tar.gz https://kubernetes-helm.storage.googleapis.com/helm-${HELM_VERSION}-linux-amd64.tar.gz \
   && tar -C /usr/local/ -xzf helm.tar.gz \
