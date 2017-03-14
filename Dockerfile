@@ -21,6 +21,7 @@ ENV KUBECTL_VERSION v1.5.2
 RUN \
   # Install curl-dev on alpine 3.4 due to http://stackoverflow.com/a/41651363/684893
   apk add --no-cache docker curl curl-dev openssh gettext \
+  # Use latest GNU tar since busybox tar version is missing useful features.
   && apk --update add tar \
   # Install Helm
   && curl -fsSL -o helm.tar.gz https://kubernetes-helm.storage.googleapis.com/helm-${HELM_VERSION}-linux-amd64.tar.gz \
@@ -32,7 +33,7 @@ RUN \
   && chmod +x ./kubectl \
   && mv ./kubectl /usr/local/bin/kubectl \
   # Install Python and NodeJS base dependencies and build dependencies.
-  && apk add --no-cache python py-psycopg2 py-pip jpeg-dev nodejs \
+  && apk add --no-cache python py-psycopg2 postgresql-dev py-pip jpeg-dev nodejs \
   && apk add --no-cache --virtual .build-dependencies python-dev build-base git \
     zlib-dev libmemcached-dev cyrus-sasl-dev jq \
   # Create a python virtualenv for future caching purposes.
