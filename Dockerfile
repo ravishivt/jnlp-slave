@@ -33,18 +33,16 @@ RUN \
   && chmod +x ./kubectl \
   && mv ./kubectl /usr/local/bin/kubectl \
   # Install Python and NodeJS base dependencies and build dependencies.
-  && apk add --no-cache python py-psycopg2 postgresql-dev py-pip jpeg-dev nodejs \
+  && apk add --no-cache python py-psycopg2 py-pip jpeg-dev nodejs \
   && apk add --no-cache --virtual .build-dependencies python-dev build-base git \
     zlib-dev libmemcached-dev cyrus-sasl-dev jq \
-  # Create a python virtualenv for future caching purposes.
+  # Create a python virtualenv for future caching purposes.  Don't actually create a virtualenv yet because then we can't cache the pip packages.
   && pip install --upgrade pip virtualenv \
-  && virtualenv /root/venv \
   # Install yarn through deprecated npm method.
   #   Alpine will have a yarn package in future, https://pkgs.alpinelinux.org/packages?name=yarn&branch=&repo=&arch=&maintainer=
   && npm install -g yarn --quiet --progress=false --color false \
   # Cleanup
-  && rm -rf /var/cache/apk/* \
-  && pip uninstall -y virtualenv
+  && rm -rf /var/cache/apk/*
 
 ENV LANG=C.UTF-8 VIRTUAL_ENV=/root/venv PATH=/root/venv/bin:$PATH PYTHONPATH=/usr/lib/python2.7/site-packages/
 
