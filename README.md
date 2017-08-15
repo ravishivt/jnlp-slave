@@ -1,4 +1,4 @@
-# jnlp-slave
+# Custom jnlp-slave for ASE CI/CD.
 Jenkins worker for use with Jenkins Kubernetes plugin
 
 Currently contains the following:
@@ -6,4 +6,11 @@ Currently contains the following:
    * docker
    * helm
    * python and python build dependencies
-   * noedjs + yarn
+   * nodejs + yarn
+
+To push a new image version, run:
+
+```
+docker login
+make all
+```

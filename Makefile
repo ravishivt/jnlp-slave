@@ -1,6 +1,6 @@
 default: docker_build
 
-DOCKER_IMAGE ?= registry.get.arubanetworks.com/aruba-get/jnlp-slave
+DOCKER_IMAGE ?= ravishi/aruba-get-ase-jnlp-slave
 BUILD_NUMBER ?= `git rev-parse --short HEAD`
 VCS_REF ?= `git rev-parse --short HEAD`
 
