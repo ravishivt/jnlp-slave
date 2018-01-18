@@ -1,5 +1,5 @@
 # https://hub.docker.com/r/jenkinsci/jnlp-slave/
-FROM jenkinsci/jnlp-slave:2.62-alpine
+FROM jenkinsci/jnlp-slave:3.16-1-alpine
 MAINTAINER GitHub ravishivt
 
 ARG VCS_REF
@@ -15,12 +15,12 @@ LABEL org.label-schema.vcs-ref=$VCS_REF \
 USER root
 ENV HOME /root
 
-ENV HELM_VERSION v2.5.1
-ENV KUBECTL_VERSION v1.6.2
+ENV HELM_VERSION v2.6.1
+ENV KUBECTL_VERSION v1.8.4
 
 RUN \
   # Install curl-dev on alpine 3.4 due to http://stackoverflow.com/a/41651363/684893
-  apk add --no-cache docker curl curl-dev openssh gettext \
+  apk add --no-cache docker curl curl-dev openssh yarn \
   # Use latest GNU tar since busybox tar version is missing useful features.
   && apk --update add tar \
   # Install Helm
@@ -33,15 +33,11 @@ RUN \
   && chmod +x ./kubectl \
   && mv ./kubectl /usr/local/bin/kubectl \
   # Install Python and NodeJS base dependencies and build dependencies.
-  && apk add --no-cache python py-psycopg2 py-pip jpeg-dev nodejs \
-  && apk add --no-cache --virtual .build-dependencies python-dev build-base git \
-    zlib-dev libmemcached-dev cyrus-sasl-dev jq \
+  && apk add --no-cache python py-pip nodejs \
+  && apk add --no-cache --virtual .build-dependencies build-base git jq \
   # Create a python virtualenv for future caching purposes.  Don't actually create a virtualenv yet because then we can't cache the pip packages.
   # Install awscli pip package so we can do automated AWS ECR logins.
   && pip install --upgrade pip virtualenv awscli \
-  # Install yarn through deprecated npm method.
-  #   Alpine will have a yarn package in future, https://pkgs.alpinelinux.org/packages?name=yarn&branch=&repo=&arch=&maintainer=
-  && npm install -g yarn --quiet --progress=false --color false \
   # Cleanup
   && rm -rf /var/cache/apk/*
 
