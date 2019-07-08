@@ -1,5 +1,5 @@
 # https://hub.docker.com/r/jenkinsci/jnlp-slave/
-FROM jenkinsci/jnlp-slave:2.62-alpine
+FROM jenkinsci/jnlp-slave:3.29-1-alpine
 MAINTAINER GitHub ravishivt
 
 ARG VCS_REF
@@ -33,15 +33,12 @@ RUN \
   && chmod +x ./kubectl \
   && mv ./kubectl /usr/local/bin/kubectl \
   # Install Python and NodeJS base dependencies and build dependencies.
-  && apk add --no-cache python py-psycopg2 py-pip jpeg-dev nodejs \
+  && apk add --no-cache python py-psycopg2 py-pip jpeg-dev nodejs yarn \
   && apk add --no-cache --virtual .build-dependencies python-dev build-base git \
     zlib-dev libmemcached-dev cyrus-sasl-dev jq \
   # Create a python virtualenv for future caching purposes.  Don't actually create a virtualenv yet because then we can't cache the pip packages.
   # Install awscli pip package so we can do automated AWS ECR logins.
   && pip install --upgrade pip virtualenv awscli \
-  # Install yarn through deprecated npm method.
-  #   Alpine will have a yarn package in future, https://pkgs.alpinelinux.org/packages?name=yarn&branch=&repo=&arch=&maintainer=
-  && npm install -g yarn --quiet --progress=false --color false \
   # Cleanup
   && rm -rf /var/cache/apk/*
 
