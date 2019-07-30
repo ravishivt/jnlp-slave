@@ -7,16 +7,16 @@ ARG BUILD_DATE
 
 # Metadata
 LABEL org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.vcs-url="https://github.com/ravishivt/jnlp-slave" \
-      org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.docker.dockerfile="/Dockerfile"
+  org.label-schema.vcs-url="https://github.com/ravishivt/jnlp-slave" \
+  org.label-schema.build-date=$BUILD_DATE \
+  org.label-schema.docker.dockerfile="/Dockerfile"
 
 # The default user for base image is not root.  We also need to update the $HOME directory for pip cache.
 USER root
 ENV HOME /root
 
-ENV HELM_VERSION v2.5.1
-ENV KUBECTL_VERSION v1.6.2
+ENV HELM_VERSION v2.12.1
+ENV KUBECTL_VERSION v1.15.0
 
 RUN \
   # Install curl-dev on alpine 3.4 due to http://stackoverflow.com/a/41651363/684893
@@ -35,7 +35,7 @@ RUN \
   # Install Python and NodeJS base dependencies and build dependencies.
   && apk add --no-cache python py-psycopg2 py-pip jpeg-dev nodejs yarn \
   && apk add --no-cache --virtual .build-dependencies python-dev build-base git \
-    zlib-dev libmemcached-dev cyrus-sasl-dev jq \
+  zlib-dev libmemcached-dev cyrus-sasl-dev jq \
   # Create a python virtualenv for future caching purposes.  Don't actually create a virtualenv yet because then we can't cache the pip packages.
   # Install awscli pip package so we can do automated AWS ECR logins.
   && pip install --upgrade pip virtualenv awscli \

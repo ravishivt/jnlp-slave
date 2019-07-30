@@ -8,9 +8,8 @@ Currently contains the following:
    * python and python build dependencies
    * nodejs + yarn
 
-To push a new image version, run:
+To push a new image version:
 
-```
-docker login
-make all
-```
+1. Commit your changes so the image pushed to the docker repo will have a unique tag.
+2. `docker login`
+3. `make all`
